@@ -6,9 +6,12 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "buffer": "^6.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -21,7 +24,124 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "import/order": [
+        2,
+        {
+          "groups": [
+            "external",
+            "internal",
+            "builtin",
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "pathGroups": [
+            {
+              "pattern": "*(!config|axios|classnames|deep-object-diff|enzyme|immutable|jsonwebtoken|memoize-one|moment|normalizr|pify|reselect|resize-observer-polyfill|sinon|final-form*|intl*|react*|redux*|yup)",
+              "group": "external",
+              "position": "before"
+            },
+            {
+              "pattern": "*(lodash|react*|redux-thunk|@testing-library)/**/*",
+              "group": "external",
+              "position": "after"
+            },
+            {
+              "pattern": "config",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "assets/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "i18n/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "utils/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "services/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "actions/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "normalizrs/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "reducers/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "sagas/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "selectors/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "model/dto/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "model/enums/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "model/types/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "model/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "containers/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "components/base/**/*",
+              "group": "internal",
+              "position": "before"
+            },
+            {
+              "pattern": "components/**/*",
+              "group": "internal",
+              "position": "before"
+            }
+          ],
+          "newlines-between": "always",
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": true
+          }
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
