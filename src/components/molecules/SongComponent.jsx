@@ -1,14 +1,16 @@
 import React from "react";
 
 import ImageComponent from "../atoms/ImageComponent";
-import { StyledSongContainer } from "../styles/songComponent.styled";
+import {
+  StyledSongContainer,
+  StyledTitle,
+} from "../styles/songComponent.styled";
 
 function SongComponent({ songInfo }) {
-  console.log(songInfo);
   return (
     <StyledSongContainer>
-      <ImageComponent />
-      <p>jeje</p>
+      <ImageComponent image={songInfo.images[1].url} />
+      <StyledTitle>{songInfo.name}</StyledTitle>
     </StyledSongContainer>
   );
 }

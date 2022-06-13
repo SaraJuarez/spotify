@@ -3,6 +3,11 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Carousel from "../components/organisms/Carousel";
+import {
+  StyledContent,
+  StyledHome,
+  StyledDiv,
+} from "../components/styles/home.styled";
 import { getAllData, getAuthorization, getToken } from "../utils/api/api";
 function Home() {
   const [code, setCode] = useState();
@@ -12,12 +17,13 @@ function Home() {
   const [categories, setCategories] = useState();
 
   useEffect(() => {
-    debugger;
     const search = window.location.search;
     let token = window.localStorage.getItem("access_token");
     let codeString = window.localStorage.getItem("code");
-    if (token !== undefined) {
-      allData();
+    if (token !== undefined && token !== null) {
+      if (newReleases === undefined) {
+        allData();
+      }
     } else if (!code && search !== "") {
       let getCode = search.split("=");
       codeString = getCode[1];
@@ -28,8 +34,6 @@ function Home() {
       getAuthorization();
     }
   }, []);
-
-  console.log("renderizando");
 
   const logout = () => {
     setToken("");
@@ -45,16 +49,22 @@ function Home() {
       })
       .catch((e) => {
         console.log(e);
+        debugger;
+        getAuthorization();
+        console.log(e);
       });
   };
 
   return (
-    <div>
-      <Header />
+    <StyledHome>
       <NavBar />
-      <Carousel newReleases={newReleases} />
-      <p>home</p>
-    </div>
+      <StyledContent>
+        <Header />
+        <StyledDiv>
+          <Carousel items={newReleases} />
+        </StyledDiv>
+      </StyledContent>
+    </StyledHome>
   );
 }
 

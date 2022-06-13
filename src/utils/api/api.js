@@ -88,6 +88,12 @@ function fetchData(URL) {
     })
     .catch(function (error) {
       console.log(error);
+      debugger;
+      if (error.response.status === 401) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("code");
+        getAuthorization();
+      }
       return { success: false };
     });
 }
