@@ -1,8 +1,5 @@
 import axios from "axios";
 
-import { Buffer } from "buffer";
-
-const token = localStorage.getItem("token");
 const URLs = [
   `${process.env.REACT_APP_BASE_URL}/v1/browse/new-releases`,
   `${process.env.REACT_APP_BASE_URL}/v1/browse/featured-playlists`,
@@ -49,6 +46,7 @@ function callAuthorizationApi(body) {
 }
 let access_token = null;
 let refresh_token = null;
+
 function handleAuthorizationResponse() {
   if (this.status === 200) {
     let data = JSON.parse(this.responseText);
@@ -61,8 +59,6 @@ function handleAuthorizationResponse() {
       refresh_token = data.refresh_token;
       localStorage.setItem("refresh_token", refresh_token);
     }
-    /*     onPageLoad();
-     */
   } else {
     console.log(this.responseText);
   }
@@ -97,53 +93,3 @@ function fetchData(URL) {
       return { success: false };
     });
 }
-
-export const getNewReleases = async () => {
-  await axios
-    .get(`${process.env.REACT_APP_BASE_URL}/v1/browse/new-releases`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        Accept: "application/json",
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      return res.data.albums.items;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const getFeaturedList = async () => {
-  await axios.get(
-    `${process.env.REACT_APP_BASE_URL}/v1/browse/featured-playlists`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    }
-  );
-  /*     .then((res) => {
-      return res.data.playlists.items;
-    })
-    .catch((err) => {
-      console.log(err);
-    }); */
-};
-
-export const getCategories = async () => {
-  await axios.get(`${process.env.REACT_APP_BASE_URL}/v1/browse/categories`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-    },
-  });
-  /*     .then((res) => {
-      return res.data.categories.items;
-    })
-    .catch((err) => {
-      console.log(err);
-    }); */
-};

@@ -9,6 +9,7 @@ import {
   StyledDiv,
 } from "../components/styles/home.styled";
 import { getAllData, getAuthorization, getToken } from "../utils/api/api";
+
 function Home() {
   const [code, setCode] = useState();
   const [token, setToken] = useState("");
@@ -46,22 +47,22 @@ function Home() {
         setNewReleases(resp[0].data.albums.items);
         setFeaturedList(resp[1].data.playlists.items);
         setCategories(resp[2].data.categories.items);
+        console.log(resp[2].data.categories.items);
       })
       .catch((e) => {
-        console.log(e);
-        debugger;
         getAuthorization();
         console.log(e);
       });
   };
-
   return (
     <StyledHome>
       <NavBar />
       <StyledContent>
         <Header />
         <StyledDiv>
-          <Carousel items={newReleases} />
+          <Carousel type="newReleases" items={newReleases} />
+          <Carousel type="featuredList" items={featuredList} />
+          <Carousel type="categories" items={categories} />
         </StyledDiv>
       </StyledContent>
     </StyledHome>

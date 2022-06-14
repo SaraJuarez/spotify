@@ -9,47 +9,46 @@ import {
   StyledIconsContainer,
 } from "../styles/carousel.styled";
 
-function Carousel({ items }) {
+function Carousel({ items, type }) {
   const [allItems, setAllItems] = useState();
-  const [copyAllItems, setCopyAllItems] = useState();
   const [showingItems, setShowingItems] = useState();
   const [indexToSplice, setIndexToSplice] = useState(0);
-  console.log(items, "todos los items");
+
+  const titles = {
+    newReleases: "New releases",
+    featuredList: "Features Lists",
+    categories: "Categories",
+  };
+
+  const limits = {
+    newReleases: 15,
+    featuredList: 8,
+    categories: 15,
+  };
+
   useEffect(() => {
     setAllItems(items);
-    setCopyAllItems(items);
     if (items !== undefined) {
       let copyItems = [...items];
       let itemsToShow = copyItems.slice(0, 5);
       setShowingItems(itemsToShow);
-      createTemporalArray(items);
     }
   }, [items]);
-  let arrayPrueba = [];
-  function createTemporalArray(items) {
-    for (let index = 0; index < items.length; index++) {
-      const element = items[index].name;
-      debugger;
-      arrayPrueba.push(element);
-    }
-    console.log(arrayPrueba);
-  }
-  useEffect(() => {}, [showingItems]);
 
   const rightArrow = () => {
-    debugger;
-    let copyItems = [...items];
-    setIndexToSplice(indexToSplice + 1);
-    let itemsToShow = copyItems.splice(indexToSplice + 1, 5);
-    console.log(itemsToShow);
-    setShowingItems(itemsToShow);
+    if (indexToSplice < limits[type]) {
+      let copyItems = [...items];
+      setIndexToSplice(indexToSplice + 1);
+      let itemsToShow = copyItems.splice(indexToSplice + 1, 5);
+      setShowingItems(itemsToShow);
+    }
   };
 
   const leftArrow = () => {
-    debugger;
-    if (indexToSplice !== 0) {
+    if (indexToSplice > 0) {
       let copyItems = [...items];
-      let itemsToShow = copyItems.splice(indexToSplice, 5);
+      setIndexToSplice(indexToSplice - 1);
+      let itemsToShow = copyItems.splice(indexToSplice - 1, 5);
       setShowingItems(itemsToShow);
     }
   };
@@ -57,7 +56,7 @@ function Carousel({ items }) {
   return (
     <div>
       <StyledCarouselTitle>
-        <h2>New releases</h2>
+        <h2>{titles[type]}</h2>
         <StyledIconsContainer>
           <KeyboardArrowLeftIcon onClick={leftArrow} />
           <ChevronRightIcon onClick={rightArrow} />
@@ -67,7 +66,9 @@ function Carousel({ items }) {
       <StyledCarousel>
         {showingItems !== undefined
           ? showingItems.map((element, index) => {
-              return <SongComponent key={index} songInfo={element} />;
+              return (
+                <SongComponent type={type} key={index} songInfo={element} />
+              );
             })
           : null}
       </StyledCarousel>
