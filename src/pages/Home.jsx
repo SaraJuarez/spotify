@@ -8,7 +8,12 @@ import {
   StyledHome,
   StyledDiv,
 } from "../components/styles/home.styled";
-import { getAllData, getAuthorization, getToken } from "../utils/api/api";
+import {
+  getAllData,
+  getAuthorization,
+  getToken,
+  getTokenV4,
+} from "../utils/api/api";
 
 function Home() {
   const [code, setCode] = useState();
@@ -18,6 +23,7 @@ function Home() {
   const [categories, setCategories] = useState();
 
   useEffect(() => {
+    debugger;
     const search = window.location.search;
     let token = window.localStorage.getItem("access_token");
     let codeString = window.localStorage.getItem("code");
@@ -30,11 +36,18 @@ function Home() {
       codeString = getCode[1];
       setCode(codeString);
       localStorage.setItem("code", codeString);
-      getToken(codeString);
+      requestToken(codeString);
     } else {
       getAuthorization();
     }
   }, []);
+
+  const requestToken = async (codeString) => {
+    let tokenReceived = getToken(codeString);
+    if (tokenReceived) {
+      allData();
+    }
+  };
 
   const logout = () => {
     setToken("");
