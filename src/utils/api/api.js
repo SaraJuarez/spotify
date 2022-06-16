@@ -1,8 +1,6 @@
 import axios from "axios";
 import qs from "query-string";
 
-import { Buffer } from "buffer";
-
 const URLs = [
   `${process.env.REACT_APP_BASE_URL}/v1/browse/new-releases`,
   `${process.env.REACT_APP_BASE_URL}/v1/browse/featured-playlists`,
@@ -21,95 +19,43 @@ export const getAuthorization = async () => {
     "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
   window.location.href = url;
 };
-
-export function getToken(code) {
-  let body = "grant_type=authorization_code";
-  body += "&code=" + code;
-  body += "&redirect_uri=" + encodeURI(redirect_uri);
-  body += "&client_id=" + process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-  body += "&client_secret=" + process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
-  callAuthorizationApi(body)
-    .then((res) => {
-      return true;
-    })
-    .catch((error) => console.log(error));
-}
-
-function callAuthorizationApi(body) {
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "https://accounts.spotify.com/api/token", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.setRequestHeader(
-    "Authorization",
-    "Basic " +
-      btoa(
-        process.env.REACT_APP_SPOTIFY_CLIENT_ID +
-          ":" +
-          process.env.REACT_APP_SPOTIFY_CLIENT_SECRET
-      )
-  );
-  xhr.send(body);
-  xhr.onload = handleAuthorizationResponse;
-}
-
 let access_token = null;
 let refresh_token = null;
 
-function handleAuthorizationResponse() {
-  debugger;
-  if (this.status === 200) {
-    let data = JSON.parse(this.responseText);
-    if (data.access_token !== undefined) {
-      access_token = data.access_token;
-      localStorage.setItem("access_token", access_token);
-    }
-    if (data.refresh_token !== undefined) {
-      refresh_token = data.refresh_token;
-      localStorage.setItem("refresh_token", refresh_token);
-    }
-    return true;
-  } else {
-    console.log(this.responseText);
-    return false;
-  }
-}
-/* MIS PRUEBAS */
-
-export const getTokenV4 = async (code) => {
-  const data = qs.stringify({
-    //query-string library
-    code,
+export const getToken = () => {
+  var data = qs.stringify({
     grant_type: "client_credentials",
-    redirect_uri: redirect_uri,
-    client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
-    client_secret: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
   });
-  await axios
-    .post("https://accounts.spotify.com/api/token", data, {
-      headers: {
-        Authorization: `Basic ${Buffer.from(
-          `${process.env.REACT_APP_SPOTIFY_CLIENT_ID}:${process.env.REACT_APP_SPOTIFY_CLIENT_SECRET}`
-        ).toString("base64")}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-    .then((res) => {
-      console.log(res, "mi codigo");
-      if (res.data.access_token !== undefined) {
-        access_token = res.data.access_token;
-        localStorage.setItem("access_token", access_token);
-      }
-      if (res.data.refresh_token !== undefined) {
-        refresh_token = res.data.refresh_token;
-        localStorage.setItem("refresh_token", refresh_token);
-      }
-    })
-    .then((error) => {
-      console.log(error);
-    });
+  var config = {
+    method: "post",
+    url: "https://accounts.spotify.com/api/token",
+    headers: {
+      Authorization:
+        "Basic MjdiNTBiMzVkZjEzNDdjY2I2NjcyOTE0NzljYWEzNmU6YTc4NThiOWQ1ZmZmNGJjZTg0YjY2NmJhMWM5YmY2YWY=",
+      "Content-Type": "application/x-www-form-urlencoded",
+      Cookie:
+        "__Host-device_id=AQBBkFptxypoVZn5Xh0-6kBMkWuM-0EdM4HolFZbsU2ZHyjfPEAroyDt0KmdJBhBf8mM7g2x2PVNg_9k6cZhT-9MB1FsrTKcOKk; __Secure-TPASESSION=AQAseWLKGm1fu0UIqw9T+5sLdzrn0VufK7tdxFcmOiri1ZuQbdtGEqzoSBrj91TJIEcQjC9+pCGE4l1uk4ohQa4D3wV7jBOtvWE=; sp_sso_csrf_token=013acda7190d0585b0be9e5b3bafd308ec6664c04f31363535323933333032383139; sp_tr=false",
+    },
+    data: data,
+  };
+  return new Promise((resolve, reject) => {
+    axios(config)
+      .then(function (response) {
+        if (response.data.access_token !== undefined) {
+          access_token = response.data.access_token;
+          localStorage.setItem("access_token", access_token);
+        }
+        if (response.data.refresh_token !== undefined) {
+          refresh_token = response.data.refresh_token;
+          localStorage.setItem("refresh_token", refresh_token);
+        }
+        resolve(true);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
 };
-
-/* FIN PRUEBAS */
 
 export const getAllData = () => {
   return Promise.all(URLs.map(fetchData));

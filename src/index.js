@@ -9,15 +9,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Rubik', sans-serif;
   }`;
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyle />
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode></React.StrictMode>
+    <GlobalStyle />
+    <App />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Header from "../components/Header";
-import NavBar from "../components/NavBar";
 import Carousel from "../components/organisms/Carousel";
-import {
-  StyledContent,
-  StyledHome,
-  StyledDiv,
-} from "../components/styles/home.styled";
-import {
-  getAllData,
-  getAuthorization,
-  getToken,
-  getTokenV4,
-} from "../utils/api/api";
+import { getAllData, getAuthorization, getToken } from "../utils/api/api";
 
 function Home() {
   const [code, setCode] = useState();
@@ -36,15 +24,15 @@ function Home() {
       codeString = getCode[1];
       setCode(codeString);
       localStorage.setItem("code", codeString);
-      requestToken(codeString);
+      requestToken();
     } else {
       getAuthorization();
     }
   }, []);
 
-  const requestToken = async (codeString) => {
-    let tokenReceived = getToken(codeString);
-    if (tokenReceived) {
+  const requestToken = async () => {
+    let tokenReceived = await getToken();
+    if (tokenReceived === true) {
       allData();
     }
   };
@@ -60,7 +48,6 @@ function Home() {
         setNewReleases(resp[0].data.albums.items);
         setFeaturedList(resp[1].data.playlists.items);
         setCategories(resp[2].data.categories.items);
-        console.log(resp[2].data.categories.items);
       })
       .catch((e) => {
         getAuthorization();
@@ -68,17 +55,11 @@ function Home() {
       });
   };
   return (
-    <StyledHome>
-      <NavBar />
-      <StyledContent>
-        <Header />
-        <StyledDiv>
-          <Carousel type="newReleases" items={newReleases} />
-          <Carousel type="featuredList" items={featuredList} />
-          <Carousel type="categories" items={categories} />
-        </StyledDiv>
-      </StyledContent>
-    </StyledHome>
+    <div>
+      <Carousel type="newReleases" items={newReleases} />
+      <Carousel type="featuredList" items={featuredList} />
+      <Carousel type="categories" items={categories} />
+    </div>
   );
 }
 

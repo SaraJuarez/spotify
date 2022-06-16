@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
+import Header from "./components/organisms/Header";
+import NavBar from "./components/organisms/NavBar";
 import {
   StyledContent,
   StyledHome,
@@ -24,13 +24,6 @@ function App() {
         </StyledDiv>
       </StyledContent>
     </StyledHome>
-    /*     <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/favs" element={<Favourites />} />
-      </Routes>
-    </div>
-  ); */
   );
 }
 
