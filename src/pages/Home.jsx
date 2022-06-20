@@ -11,7 +11,6 @@ function Home() {
   const [categories, setCategories] = useState();
 
   useEffect(() => {
-    debugger;
     const search = window.location.search;
     let token = window.localStorage.getItem("access_token");
     let codeString = window.localStorage.getItem("code");
@@ -24,14 +23,14 @@ function Home() {
       codeString = getCode[1];
       setCode(codeString);
       localStorage.setItem("code", codeString);
-      requestToken();
+      requestToken(codeString);
     } else {
       getAuthorization();
     }
   }, []);
 
-  const requestToken = async () => {
-    let tokenReceived = await getToken();
+  const requestToken = async (codeString) => {
+    let tokenReceived = await getToken(codeString);
     if (tokenReceived === true) {
       allData();
     }

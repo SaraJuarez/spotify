@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from "query-string";
 
 const URLs = [
   `${process.env.REACT_APP_BASE_URL}/v1/browse/new-releases`,
@@ -16,12 +15,43 @@ export const getAuthorization = async () => {
   url += "&redirect_uri=" + encodeURI(redirect_uri);
   url += "&show_dialog=true";
   url +=
-    "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
+    "&scope=user-read-private user-top-read user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
   window.location.href = url;
 };
 let access_token = null;
 let refresh_token = null;
+export function getToken(code) {
+  let body = "grant_type=authorization_code";
+  body += "&code=" + code;
+  body += "&redirect_uri=" + encodeURI("http://localhost:3000");
+  body += "&client_id=" + process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+  body += "&client_secret=" + process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+  return new Promise((resolve, reject) => {
+    axios("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic MjdiNTBiMzVkZjEzNDdjY2I2NjcyOTE0NzljYWEzNmU6YTc4NThiOWQ1ZmZmNGJjZTg0YjY2NmJhMWM5YmY2YWY=",
+      },
+      data: body,
+    })
+      .then((response) => {
+        if (response.data.access_token !== undefined) {
+          access_token = response.data.access_token;
+          localStorage.setItem("access_token", access_token);
+        }
+        if (response.data.refresh_token !== undefined) {
+          refresh_token = response.data.refresh_token;
+          localStorage.setItem("refresh_token", refresh_token);
+        }
+        resolve(true);
+      })
+      .catch((error) => reject(error));
+  });
+}
 
+/* 
 export const getToken = () => {
   var data = qs.stringify({
     grant_type: "client_credentials",
@@ -49,6 +79,7 @@ export const getToken = () => {
           refresh_token = response.data.refresh_token;
           localStorage.setItem("refresh_token", refresh_token);
         }
+        debugger;
         resolve(true);
       })
       .catch(function (error) {
@@ -56,7 +87,7 @@ export const getToken = () => {
       });
   });
 };
-
+ */
 export const getAllData = () => {
   return Promise.all(URLs.map(fetchData));
 };
@@ -87,4 +118,30 @@ function fetchData(URL) {
     });
 }
 
-export const getFavs = async () => {};
+export const getFavs = async () => {
+  let token = localStorage.getItem("access_token");
+  debugger;
+  var config = {
+    method: "get",
+    url: "https://api.spotify.com/v1/me/top/artists",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return new Promise((resolve, reject) => {
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        resolve(response.data.items);
+      })
+      .catch(function (error) {
+        console.log(error);
+        if (error.response.status === 401) {
+          getAuthorization();
+        }
+        reject(error);
+      });
+  });
+};

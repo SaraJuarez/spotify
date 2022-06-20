@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const StyledNavBarLinkDiv = styled.div`
+export const StyledNavBarLinkDiv = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,6 +10,7 @@ export const StyledNavBarLinkDiv = styled.div`
   min-height: 75px;
   opacity: 0.5;
   width: 100%;
+  text-decoration: none;
 
   :hover {
     opacity: 1;

@@ -4,9 +4,9 @@ import { IconContext } from "react-icons";
 import { StyledNavBarLinkDiv, StyledLink } from "../styles/navBarLink.styled";
 
 function NavBarLink(props) {
-  const { icon, title } = props;
+  const { icon, title, url } = props;
   return (
-    <StyledNavBarLinkDiv>
+    <StyledNavBarLinkDiv to={url}>
       <StyledLink>
         <IconContext.Provider value={{ color: "white" }}>
           {icon}

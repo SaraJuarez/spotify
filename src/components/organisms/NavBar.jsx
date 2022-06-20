@@ -18,22 +18,27 @@ function NavBar() {
     {
       title: "Discover",
       icon: <BsHeadphones />,
+      url: "#",
     },
     {
       title: "Search",
       icon: <AiOutlineSearch />,
+      url: "#",
     },
     {
       title: "Favourites",
       icon: <AiFillHeart />,
+      url: "/favs",
     },
     {
       title: "Playlists",
       icon: <AiFillPlayCircle />,
+      url: "#",
     },
     {
       title: "Charts",
       icon: <RiBarChartHorizontalLine />,
+      url: "#",
     },
   ];
 
@@ -45,7 +50,12 @@ function NavBar() {
       </AvatarImageContainer>
       {elements.map((element, index) => {
         return (
-          <NavBarLink key={index} title={element.title} icon={element.icon} />
+          <NavBarLink
+            key={index}
+            title={element.title}
+            icon={element.icon}
+            url={element.url}
+          />
         );
       })}
     </NavBarStyled>
