@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import FavComponent from "../components/atoms/FavComponent";
 import { getFavs } from "../utils/api/api";
 
 function Favourites() {
@@ -21,7 +22,7 @@ function Favourites() {
     <div>
       {favList !== undefined
         ? favList.map((element, index) => {
-            return <p key={index}>{element.name}</p>;
+            return <FavComponent key={index} itemInfo={element} />;
           })
         : null}
     </div>

@@ -26,6 +26,7 @@ export const AvatarImageContainer = styled.div`
     color: white;
     font-size: 14px;
     font-weight: lighter;
+    text-align: center;
   }
 `;
 
