@@ -17,13 +17,13 @@ function App() {
       <NavBar />
       <StyledContent>
         <Header />
-        <StyledDiv>
+        <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favs" element={<Favourites />} />
             <Route path="/:id" element={<AlbumDetail />} />
           </Routes>
-        </StyledDiv>
+        </div>
       </StyledContent>
     </StyledHome>
   );

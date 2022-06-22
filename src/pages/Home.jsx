@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Carousel from "../components/organisms/Carousel";
+import { StyledDiv } from "../components/styles/home.styled";
 import { getAllData, getAuthorization, getToken } from "../utils/api/api";
 
 function Home() {
@@ -54,11 +55,11 @@ function Home() {
       });
   };
   return (
-    <div>
+    <StyledDiv>
       <Carousel type="newReleases" items={newReleases} />
       <Carousel type="featuredList" items={featuredList} />
       <Carousel type="categories" items={categories} />
-    </div>
+    </StyledDiv>
   );
 }
 

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const AlbumDetailContainer = styled.div`
+  padding: 30px;
   display: flex;
   background: linear-gradient(
     90deg,
@@ -28,6 +29,7 @@ export const AlbumDetailName = styled.p`
 `;
 
 export const AlbumDetailSongList = styled.div`
+  padding: 30px;
   background: linear-gradient(
     90deg,
     rgba(213, 214, 214, 1) 0%,

@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const AlbumDetailHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: 3;
 `;
 
 export const AlbumDetailHeaderPlay = styled.div`
