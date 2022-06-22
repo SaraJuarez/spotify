@@ -9,6 +9,7 @@ export const AlbumDetailHeaderContainer = styled.div`
 
 export const AlbumDetailHeaderPlay = styled.div`
   width: 100%;
+  padding-left: 30px;
 `;
 
 export const AlbumDetailHeaderStyled = styled.div`

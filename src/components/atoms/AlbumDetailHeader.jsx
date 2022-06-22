@@ -1,6 +1,7 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { AiFillClockCircle, AiFillPlayCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import {
   AlbumDetailHeaderContainer,
@@ -11,12 +12,18 @@ import {
   Div3,
 } from "../styles/albumDetailHeader.styled";
 
-function AlbumDetailHeader() {
+function AlbumDetailHeader({ albumLink }) {
+  console.log(albumLink);
   return (
     <AlbumDetailHeaderContainer>
       <AlbumDetailHeaderPlay>
         <IconContext.Provider value={{ color: "#4bd759" }}>
-          <AiFillPlayCircle size={70} />
+          <a href={albumLink} target="_blank" rel="noreferrer">
+            <AiFillPlayCircle size={70} />
+          </a>
+          {/*         <Link target="_blank" to={{ pathname: albumLink }}>
+            <AiFillPlayCircle size={70} />
+          </Link> */}
         </IconContext.Provider>
       </AlbumDetailHeaderPlay>
       <AlbumDetailHeaderStyled>
