@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import AlbumDetailHeader from "../components/atoms/AlbumDetailHeader";
 import SongComponent from "../components/molecules/SongComponent";
 import {
   AlbumDetailContainer,
@@ -50,6 +51,7 @@ function AlbumDetail(props) {
         </AlbumDetailContainer>
       ) : null}
       <AlbumDetailSongList>
+        <AlbumDetailHeader />
         {albumInfo?.tracks.items.map((element, index) => {
           return <SongComponent key={index} songInfo={element} />;
         })}
