@@ -1,25 +1,26 @@
 import React from "react";
 
-import ImageComponent from "../atoms/ImageComponent";
 import {
-  StyledSongContainer,
-  StyledTitle,
+  SongComponentContainer,
+  SongComponentTitle,
+  SongComponentNumber,
+  SongComponentDuration,
 } from "../styles/songComponent.styled";
 
-function SongComponent({ songInfo, type }) {
-  let image;
-  if (type === "newReleases") {
-    image = songInfo.images[1].url;
-  } else if (type === "featuredList") {
-    image = songInfo.images[0].url;
-  } else {
-    image = songInfo.icons[0].url;
-  }
+function SongComponent({ songInfo }) {
   return (
-    <StyledSongContainer>
-      <ImageComponent image={image} type={type} />
-      <StyledTitle>{songInfo.name}</StyledTitle>
-    </StyledSongContainer>
+    <SongComponentContainer>
+      <SongComponentNumber>
+        <p>{songInfo.track_number}</p>
+      </SongComponentNumber>
+      <SongComponentTitle>
+        <p>{songInfo.name}</p>
+        <p>{songInfo.artists[0].name}</p>
+      </SongComponentTitle>
+      <SongComponentDuration>
+        <p>2:33</p>
+      </SongComponentDuration>
+    </SongComponentContainer>
   );
 }
 

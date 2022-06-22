@@ -7,6 +7,7 @@ import {
   StyledHome,
   StyledDiv,
 } from "./components/styles/home.styled";
+import AlbumDetail from "./pages/AlbumDetail";
 import Favourites from "./pages/Favourites";
 import Home from "./pages/Home";
 
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favs" element={<Favourites />} />
+            <Route path="/:id" element={<AlbumDetail />} />
           </Routes>
         </StyledDiv>
       </StyledContent>

@@ -18,7 +18,7 @@ function NavBar() {
     {
       title: "Discover",
       icon: <BsHeadphones />,
-      url: "#",
+      url: "/",
     },
     {
       title: "Search",

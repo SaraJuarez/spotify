@@ -120,7 +120,6 @@ function fetchData(URL) {
 
 export const getFavs = async () => {
   let token = localStorage.getItem("access_token");
-  debugger;
   var config = {
     method: "get",
     url: "https://api.spotify.com/v1/me/top/artists",
@@ -144,4 +143,20 @@ export const getFavs = async () => {
         reject(error);
       });
   });
+};
+
+export const getAlbumInfo = async (id) => {
+  let token = localStorage.getItem("access_token");
+  return await axios
+    .get(`https://api.spotify.com/v1/albums/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token} `,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => console.log(error));
 };

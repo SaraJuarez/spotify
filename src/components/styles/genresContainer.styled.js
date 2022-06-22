@@ -12,9 +12,11 @@ export const GenresStyledDiv = styled.div`
     color: white;
     padding: 5px;
     border-radius: 5px;
+    cursor: pointer;
   }
 `;
 
 export const NoGenres = styled.p`
   color: white;
+  text-decoration: line-through;
 `;

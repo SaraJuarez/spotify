@@ -2,7 +2,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import React, { useState, useEffect } from "react";
 
-import SongComponent from "../molecules/SongComponent";
+import ItemComponent from "../molecules/ItemComponent";
 import {
   StyledCarousel,
   StyledCarouselTitle,
@@ -27,7 +27,7 @@ function Carousel({ items, type }) {
   };
 
   useEffect(() => {
-    setAllItems(items);
+    setAllItems(items, "allItems");
     if (items !== undefined) {
       let copyItems = [...items];
       let itemsToShow = copyItems.slice(0, 5);
@@ -67,7 +67,7 @@ function Carousel({ items, type }) {
         {showingItems !== undefined
           ? showingItems.map((element, index) => {
               return (
-                <SongComponent type={type} key={index} songInfo={element} />
+                <ItemComponent type={type} key={index} songInfo={element} />
               );
             })
           : null}
