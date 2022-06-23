@@ -1,5 +1,6 @@
 import React from "react";
 
+import { msToTime } from "../../utils/helpers/helpers";
 import {
   SongComponentContainer,
   SongComponentTitle,
@@ -8,6 +9,8 @@ import {
 } from "../styles/songComponent.styled";
 
 function SongComponent({ songInfo }) {
+  let songLength = msToTime(songInfo.duration_ms, "noText");
+
   return (
     <SongComponentContainer>
       <SongComponentNumber>
@@ -18,7 +21,7 @@ function SongComponent({ songInfo }) {
         <p>{songInfo.artists[0].name}</p>
       </SongComponentTitle>
       <SongComponentDuration>
-        <p>2:33</p>
+        <p>{songLength}</p>
       </SongComponentDuration>
     </SongComponentContainer>
   );

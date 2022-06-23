@@ -11,6 +11,8 @@ export const SongComponentTitle = styled.div`
   display: flex;
   flex-direction: column;
   grid-column-start: 2;
+  /*   grid-column-start: 2;
+ */
   width: 100%;
   p {
     color: white;

@@ -42,6 +42,7 @@ export const AlbumDetailSongList = styled.div`
     rgba(18, 18, 18, 1) 100%
   ); */
   display: grid;
+
   grid-template-columns: 10% 85% 5%;
   grid-row-gap: 10px;
   /*   width: 100%; */
